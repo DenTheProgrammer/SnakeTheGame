@@ -11,3 +11,17 @@ button {
     cursor: pointer;
     outline: none;
 }
+
+.field{
+    
+}
+
+.fieldRow{
+    display: flex;
+}
+
+.cell{
+    width: 20px;
+    height: 20px;
+    border: solid 1px black;
+}

@@ -2,8 +2,8 @@
 var game = {
     isRunning: false,
     score: 0,
-    sizeX: 40,
-    sizeY: 40,
+    sizeX: 30,
+    sizeY: 30,
 }
 //объект змейки
 var snake = {

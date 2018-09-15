@@ -12,8 +12,14 @@ button {
     outline: none;
 }
 
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .field {
-    border: solid 1px red;
+    border: solid 5px red;
     display: inline-block;
 }
 
@@ -22,17 +28,21 @@ button {
 }
 
 .cell {
-    width: 10px;
-    height: 10px;
+    width: 15px;
+    height: 15px;
     /*    border: solid 1px black;*/
 }
 
 
-.food{
-    background: blue;
+.food {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url(https: //image.flaticon.com/icons/svg/135/135717.svg);
 }
+
 
 .snake {
     background: green;
+    border-radius: 30%;
 }
-

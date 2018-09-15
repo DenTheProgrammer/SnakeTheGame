@@ -7,13 +7,13 @@ var game = {
 }
 //объект змейки
 var snake = {
-    body: [[0,0],[0,1],[0,2],[0,3]],
+    body: [[0, 3], [0, 2], [0, 1], [0, 0]],
     direction: "down",
     colour: "#ffff00",
     speed: 200,
-  
-}
 
+}
+var snakeTimer, foodTimer;
 
 
 
@@ -60,45 +60,22 @@ addEventListener("keydown", function (e) { //смена направления �
                 snake.direction = "down";
             break;
         case "Enter":
+            if (game.isRunning === false) {
+                snakeTimer = setInterval(move, snake.speed);
+                foodTimer = setInterval(addFood, 3000);
+                console.log("game is running..");
+            } else {
+                clearInterval(snakeTimer);
+                clearInterval(foodTimer);
+                console.log("game is paused");
+            }
             game.isRunning = !game.isRunning;
-            console.log("game is running: "+game.isRunning);
             break;
     }
     //    console.log(snake.direction);
 })
 
-//function move() {
-//    var headX = snake.body[0][0];
-//    var headY = snake.body[0][1];
-//    var tailX = snake.body[snake.body.length - 1][0];
-//    var tailY = snake.body[snake.body.length - 1][1];
-//
-//    switch (snake.direction) {
-//        case "up":
-//            document.querySelector(".x" + headX + "y" + headY).classList.remove("snake");
-//            document.querySelector(".x" + headX + "y" + (headY - 1)).classList.add("snake");
-//            snake.body[0] = [headX, headY - 1];
-//            break;
-//        case "down":
-//            document.querySelector(".x" + headX + "y" + headY).classList.remove("snake");
-//            document.querySelector(".x" + headX + "y" + (headY + 1)).classList.add("snake");
-//            snake.body[0] = [headX, headY + 1];
-//            break;
-//        case "left":
-//            document.querySelector(".x" + headX + "y" + headY).classList.remove("snake");
-//            document.querySelector(".x" + (headX - 1) + "y" + headY).classList.add("snake");
-//            snake.body[0] = [headX - 1, headY];
-//            break;
-//        case "right":
-//            document.querySelector(".x" + headX + "y" + headY).classList.remove("snake");
-//            document.querySelector(".x" + (headX + 1) + "y" + headY).classList.add("snake");
-//            snake.body[0] = [headX + 1, headY];
-//            break;
-//    }
-//    
-//    
-//    console.log("move");
-//}
+
 function move() {
     var newHeadPosition;
     switch (snake.direction) {
@@ -116,17 +93,22 @@ function move() {
             break;
 
     }
-    document.querySelector(".x"+snake.body[snake.body.length-1][0]+"y"+snake.body[snake.body.length-1][1]).classList.remove("snake");
+    document.querySelector(".x" + snake.body[snake.body.length - 1][0] + "y" + snake.body[snake.body.length - 1][1]).classList.remove("snake");
     for (i = snake.body.length - 1; i > 0; i--) {
         snake.body[i] = snake.body[i - 1];
     }
     snake.body[0] = newHeadPosition;
-    
+
     drawSnake();
 
     console.log("move");
 }
 
-
-
-setInterval(move, snake.speed);
+function addFood() {
+    var randX, randY;
+    randX = Math.floor(Math.random() * game.sizeX);
+    randY = Math.floor(Math.random() * game.sizeY);
+    if (document.querySelector(".x" + randX + "y" + randY).classList[2] !== "snake") {
+        document.querySelector(".x" + randX + "y" + randY).classList.add("food");
+    }
+}

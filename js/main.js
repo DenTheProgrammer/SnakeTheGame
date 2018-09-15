@@ -93,6 +93,14 @@ function move() {
             break;
 
     }
+    ///////////////////////проверка на проигрыш//
+    if (document.querySelector(".x" + newHeadPosition[0] + "y" + newHeadPosition[1]) === null || document.querySelector(".x" + newHeadPosition[0] + "y" + newHeadPosition[1]).classList[2]==="snake") {
+        game.isRunning = false;
+        clearInterval(snakeTimer);
+        clearInterval(foodTimer);
+        alert("Вы проиграли, ваш счет: "+game.score);
+    }
+    /////////////////////////////////////////////
     document.querySelector(".x" + snake.body[snake.body.length - 1][0] + "y" + snake.body[snake.body.length - 1][1]).classList.remove("snake");
     for (i = snake.body.length - 1; i > 0; i--) {
         snake.body[i] = snake.body[i - 1];
@@ -104,16 +112,14 @@ function move() {
     if (document.querySelector(".x" + snake.body[snake.body.length - 1][0] + "y" + snake.body[snake.body.length - 1][1]).classList[2] === "food") {
         snake.body.push([snake.body[snake.body.length - 1][0], snake.body[snake.body.length - 1][1]]);
         document.querySelector(".x" + snake.body[snake.body.length - 1][0] + "y" + snake.body[snake.body.length - 1][1]).classList.remove("food");
+        game.score++;
     }
     ////////////////////////
 
 
-    if (false) {
-        alert("Вы проиграли");
-    }
     drawSnake();
 
-    console.log("move");
+    console.log(document.querySelector(".x" + newHeadPosition[0] + "y" + newHeadPosition[1]).classList);
 }
 
 function addFood() {

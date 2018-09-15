@@ -5,15 +5,15 @@ var game = {
     sizeX: 40,
     sizeY: 40,
 }
+//объект змейки
 var snake = {
-    body: [],
-    direction: "up",
+    body: [[0,0],[0,1],[0,2],[0,3]],
+    direction: "down",
     colour: "#ffff00",
     speed: 200,
-    headCoordX: Math.round(game.sizeX / 2),
-    headCoordY: Math.round(game.sizeY / 2),
+  
 }
-snake.body.push([snake.headCoordX, snake.headCoordY]); //координаты "головы"
+
 
 
 
@@ -33,9 +33,13 @@ for (var i = 0; i < game.sizeY; i++) {
     field.appendChild(fieldRow);
 }
 
-document.querySelector(".x" + snake.body[0][0] + "y" + snake.body[0][0]).classList.add("snake"); //рисуем голову
 
-
+function drawSnake() {
+    for (i in snake.body) {
+        document.querySelector(".x" + snake.body[i][0] + "y" + snake.body[i][1]).classList.add("snake"); //отрисовываем змейку
+    }
+}
+drawSnake();
 addEventListener("keydown", function (e) { //смена направления движения по клавишам
     //    console.log(e.key);
     switch (e.key) {
@@ -56,46 +60,73 @@ addEventListener("keydown", function (e) { //смена направления �
                 snake.direction = "down";
             break;
         case "Enter":
-            game.isRunning = true;
-            console.log("game is running...");
+            game.isRunning = !game.isRunning;
+            console.log("game is running: "+game.isRunning);
             break;
     }
     //    console.log(snake.direction);
 })
 
+//function move() {
+//    var headX = snake.body[0][0];
+//    var headY = snake.body[0][1];
+//    var tailX = snake.body[snake.body.length - 1][0];
+//    var tailY = snake.body[snake.body.length - 1][1];
+//
+//    switch (snake.direction) {
+//        case "up":
+//            document.querySelector(".x" + headX + "y" + headY).classList.remove("snake");
+//            document.querySelector(".x" + headX + "y" + (headY - 1)).classList.add("snake");
+//            snake.body[0] = [headX, headY - 1];
+//            break;
+//        case "down":
+//            document.querySelector(".x" + headX + "y" + headY).classList.remove("snake");
+//            document.querySelector(".x" + headX + "y" + (headY + 1)).classList.add("snake");
+//            snake.body[0] = [headX, headY + 1];
+//            break;
+//        case "left":
+//            document.querySelector(".x" + headX + "y" + headY).classList.remove("snake");
+//            document.querySelector(".x" + (headX - 1) + "y" + headY).classList.add("snake");
+//            snake.body[0] = [headX - 1, headY];
+//            break;
+//        case "right":
+//            document.querySelector(".x" + headX + "y" + headY).classList.remove("snake");
+//            document.querySelector(".x" + (headX + 1) + "y" + headY).classList.add("snake");
+//            snake.body[0] = [headX + 1, headY];
+//            break;
+//    }
+//    
+//    
+//    console.log("move");
+//}
 function move() {
-    var headX = snake.body[0][0];
-    var headY = snake.body[0][1];
-    var tailX = snake.body[snake.body.length - 1][0];
-    var tailY = snake.body[snake.body.length - 1][1];
-
+    var newHeadPosition;
     switch (snake.direction) {
         case "up":
-            document.querySelector(".x" + headX + "y" + headY).classList.remove("snake");
-            document.querySelector(".x" + headX + "y" + (headY - 1)).classList.add("snake");
-            snake.body[0] = [headX, headY - 1];
+            newHeadPosition = [snake.body[0][0], snake.body[0][1] - 1];
             break;
         case "down":
-            document.querySelector(".x" + headX + "y" + headY).classList.remove("snake");
-            document.querySelector(".x" + headX + "y" + (headY + 1)).classList.add("snake");
-            snake.body[0] = [headX, headY + 1];
+            newHeadPosition = [snake.body[0][0], snake.body[0][1] + 1];
             break;
         case "left":
-            document.querySelector(".x" + headX + "y" + headY).classList.remove("snake");
-            document.querySelector(".x" + (headX - 1) + "y" + headY).classList.add("snake");
-            snake.body[0] = [headX - 1, headY];
+            newHeadPosition = [snake.body[0][0] - 1, snake.body[0][1]];
             break;
         case "right":
-            document.querySelector(".x" + headX + "y" + headY).classList.remove("snake");
-            document.querySelector(".x" + (headX + 1) + "y" + headY).classList.add("snake");
-            snake.body[0] = [headX + 1, headY];
+            newHeadPosition = [snake.body[0][0] + 1, snake.body[0][1]];
             break;
+
     }
+    document.querySelector(".x"+snake.body[snake.body.length-1][0]+"y"+snake.body[snake.body.length-1][1]).classList.remove("snake");
+    for (i = snake.body.length - 1; i > 0; i--) {
+        snake.body[i] = snake.body[i - 1];
+    }
+    snake.body[0] = newHeadPosition;
+    
+    drawSnake();
+
     console.log("move");
 }
 
 
 
-
-    setInterval(move, snake.speed);
-
+setInterval(move, snake.speed);

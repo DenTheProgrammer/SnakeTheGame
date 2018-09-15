@@ -28,8 +28,8 @@ button {
 }
 
 .cell {
-    width: 15px;
-    height: 15px;
+    width: 10px;
+    height: 10px;
     /*    border: solid 1px black;*/
 }
 
@@ -38,7 +38,8 @@ button {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-image: url(https: //image.flaticon.com/icons/svg/135/135717.svg);
+    background-image: url(../img/1.svg);
+/*    background: blue;*/
 }
 
 

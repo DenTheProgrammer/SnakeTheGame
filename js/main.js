@@ -7,7 +7,7 @@ var game = {
 }
 //объект змейки
 var snake = {
-    body: [[0, 3], [0, 2], [0, 1], [0, 0]],
+    body: [[0, 0]],
     direction: "down",
     colour: "#ffff00",
     speed: 200,
@@ -99,6 +99,18 @@ function move() {
     }
     snake.body[0] = newHeadPosition;
 
+
+    ////////////////////////Eating////////////
+    if (document.querySelector(".x" + snake.body[snake.body.length - 1][0] + "y" + snake.body[snake.body.length - 1][1]).classList[2] === "food") {
+        snake.body.push([snake.body[snake.body.length - 1][0], snake.body[snake.body.length - 1][1]]);
+        document.querySelector(".x" + snake.body[snake.body.length - 1][0] + "y" + snake.body[snake.body.length - 1][1]).classList.remove("food");
+    }
+    ////////////////////////
+
+
+    if (false) {
+        alert("Вы проиграли");
+    }
     drawSnake();
 
     console.log("move");

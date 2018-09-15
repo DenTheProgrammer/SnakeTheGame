@@ -9,7 +9,7 @@ var game = {
 var snake = {
     body: [[0, 0]],
     direction: "down",
-    colour: "#ffff00",
+    colour: "#00ff00",
     speed: 200,
 
 }
@@ -94,11 +94,11 @@ function move() {
 
     }
     ///////////////////////проверка на проигрыш//
-    if (document.querySelector(".x" + newHeadPosition[0] + "y" + newHeadPosition[1]) === null || document.querySelector(".x" + newHeadPosition[0] + "y" + newHeadPosition[1]).classList[2]==="snake") {
+    if (document.querySelector(".x" + newHeadPosition[0] + "y" + newHeadPosition[1]) === null || document.querySelector(".x" + newHeadPosition[0] + "y" + newHeadPosition[1]).classList[2] === "snake") {
         game.isRunning = false;
         clearInterval(snakeTimer);
         clearInterval(foodTimer);
-        alert("Вы проиграли, ваш счет: "+game.score);
+        alert("Вы проиграли, ваш счет: " + game.score);
     }
     /////////////////////////////////////////////
     document.querySelector(".x" + snake.body[snake.body.length - 1][0] + "y" + snake.body[snake.body.length - 1][1]).classList.remove("snake");
@@ -115,6 +115,10 @@ function move() {
         game.score++;
     }
     ////////////////////////
+
+    //////////////score///////
+    document.querySelector(".score").innerHTML = "Счет: " + game.score;
+    ///////////////////////
 
 
     drawSnake();

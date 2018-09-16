@@ -1,7 +1,6 @@
 //Объект с данными об игре
 var game = {
     isRunning: false,
-    score: 0,
     sizeX: 40,
     sizeY: 40,
 }
@@ -10,7 +9,7 @@ var snake = {
     body: [[0, 0]],
     direction: "down",
     colour: "#00ff00",
-    speed: 100,
+    speed: 150,
 
 }
 var snakeTimer, foodTimer;
@@ -94,14 +93,14 @@ function move() {
 
     }
     /////////////////////проверка на проигрыш//
-        if (
-//            document.querySelector(".x" + newHeadPosition[0] + "y" + newHeadPosition[1]) === null || 
-            document.querySelector(".x" + newHeadPosition[0] + "y" + newHeadPosition[1]).classList[2] === "snake") {
-            game.isRunning = false;
-            clearInterval(snakeTimer);
-            clearInterval(foodTimer);
-            alert("Вы проиграли, ваш счет: " + game.score);
-        }
+    if (
+        document.querySelector(".x" + newHeadPosition[0] + "y" + newHeadPosition[1]) !== null &&
+        document.querySelector(".x" + newHeadPosition[0] + "y" + newHeadPosition[1]).classList[2] === "snake") {
+        game.isRunning = false;
+        clearInterval(snakeTimer);
+        clearInterval(foodTimer);
+        alert("Вы проиграли(");
+    }
     ///////////////////////////////////////////
     document.querySelector(".x" + snake.body[snake.body.length - 1][0] + "y" + snake.body[snake.body.length - 1][1]).classList.remove("snake");
     for (i = snake.body.length - 1; i > 0; i--) {
@@ -125,18 +124,18 @@ function move() {
     if (document.querySelector(".x" + snake.body[snake.body.length - 1][0] + "y" + snake.body[snake.body.length - 1][1]).classList[2] === "food") {
         snake.body.push([snake.body[snake.body.length - 1][0], snake.body[snake.body.length - 1][1]]);
         document.querySelector(".x" + snake.body[snake.body.length - 1][0] + "y" + snake.body[snake.body.length - 1][1]).classList.remove("food");
-        game.score++;
+
     }
     ////////////////////////
 
     //////////////score///////
-    document.querySelector(".score").innerHTML = "Счет: " + game.score;
+    document.querySelector(".score").innerHTML = "Длина змейки: " + snake.body.length;
     ///////////////////////
 
 
     drawSnake();
 
-    console.log(document.querySelector(".x" + newHeadPosition[0] + "y" + newHeadPosition[1]).classList);
+//    console.log(document.querySelector(".x" + newHeadPosition[0] + "y" + newHeadPosition[1]).classList);
 }
 
 function addFood() {
@@ -147,3 +146,4 @@ function addFood() {
         document.querySelector(".x" + randX + "y" + randY).classList.add("food");
     }
 }
+

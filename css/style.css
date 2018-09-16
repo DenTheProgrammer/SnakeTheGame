@@ -22,6 +22,7 @@ button {
 .field {
     border: solid 5px blue;
     display: inline-block;
+    margin: 20px;
 }
 
 .fieldRow {
@@ -29,8 +30,8 @@ button {
 }
 
 .cell {
-    width: 10px;
-    height: 10px;
+    width: 15px;
+    height: 15px;
     /*    border: solid 1px black;*/
 }
 
@@ -48,6 +49,11 @@ button {
     background: green;
     border-radius: 30%;
 }
-.score{
-    margin: 20px;
+
+.wall{
+    background-image: url(../img/wall.svg);
+}
+
+.pause{
+    background: url(../img/pause.svg) no-repeat center;
 }

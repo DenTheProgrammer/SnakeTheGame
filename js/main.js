@@ -1,14 +1,14 @@
 //Объект с данными об игре
 var game = {
     isRunning: false,
-    sizeX: 40,
-    sizeY: 40,
+    sizeX: 20,
+    sizeY: 30,
 }
 //объект змейки
 var snake = {
     body: [[0, 0]],
     direction: "down",
-    colour: "#00ff00",
+//    colour: "#00ff00",
     speed: 150,
 
 }
@@ -63,10 +63,12 @@ addEventListener("keydown", function (e) { //смена направления �
                 snakeTimer = setInterval(move, snake.speed);
                 foodTimer = setInterval(addFood, 3000);
                 console.log("game is running..");
+                document.querySelector(".field").classList.remove("pause");
             } else {
                 clearInterval(snakeTimer);
                 clearInterval(foodTimer);
                 console.log("game is paused");
+                document.querySelector(".field").classList.add("pause");
             }
             game.isRunning = !game.isRunning;
             break;
@@ -95,11 +97,12 @@ function move() {
     /////////////////////проверка на проигрыш//
     if (
         document.querySelector(".x" + newHeadPosition[0] + "y" + newHeadPosition[1]) !== null &&
-        document.querySelector(".x" + newHeadPosition[0] + "y" + newHeadPosition[1]).classList[2] === "snake") {
+        (document.querySelector(".x" + newHeadPosition[0] + "y" + newHeadPosition[1]).classList[2] === "snake" || document.querySelector(".x" + newHeadPosition[0] + "y" + newHeadPosition[1]).classList[2] === "wall")) {
         game.isRunning = false;
         clearInterval(snakeTimer);
         clearInterval(foodTimer);
-        alert("Вы проиграли(");
+        alert("Вы проиграли :(");
+        if(confirm("Новая игра?")){location.reload()};
     }
     ///////////////////////////////////////////
     document.querySelector(".x" + snake.body[snake.body.length - 1][0] + "y" + snake.body[snake.body.length - 1][1]).classList.remove("snake");
@@ -124,6 +127,7 @@ function move() {
     if (document.querySelector(".x" + snake.body[snake.body.length - 1][0] + "y" + snake.body[snake.body.length - 1][1]).classList[2] === "food") {
         snake.body.push([snake.body[snake.body.length - 1][0], snake.body[snake.body.length - 1][1]]);
         document.querySelector(".x" + snake.body[snake.body.length - 1][0] + "y" + snake.body[snake.body.length - 1][1]).classList.remove("food");
+        document.querySelector(".x" + snake.body[snake.body.length - 1][0] + "y" + snake.body[snake.body.length - 1][1]).classList.add("wall");
 
     }
     ////////////////////////

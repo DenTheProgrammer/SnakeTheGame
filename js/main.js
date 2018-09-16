@@ -10,7 +10,7 @@ var snake = {
     body: [[0, 0]],
     direction: "down",
     colour: "#00ff00",
-    speed: 200,
+    speed: 100,
 
 }
 var snakeTimer, foodTimer;
@@ -93,20 +93,33 @@ function move() {
             break;
 
     }
-    ///////////////////////проверка на проигрыш//
-    if (document.querySelector(".x" + newHeadPosition[0] + "y" + newHeadPosition[1]) === null || document.querySelector(".x" + newHeadPosition[0] + "y" + newHeadPosition[1]).classList[2] === "snake") {
-        game.isRunning = false;
-        clearInterval(snakeTimer);
-        clearInterval(foodTimer);
-        alert("Вы проиграли, ваш счет: " + game.score);
-    }
-    /////////////////////////////////////////////
+    /////////////////////проверка на проигрыш//
+        if (
+//            document.querySelector(".x" + newHeadPosition[0] + "y" + newHeadPosition[1]) === null || 
+            document.querySelector(".x" + newHeadPosition[0] + "y" + newHeadPosition[1]).classList[2] === "snake") {
+            game.isRunning = false;
+            clearInterval(snakeTimer);
+            clearInterval(foodTimer);
+            alert("Вы проиграли, ваш счет: " + game.score);
+        }
+    ///////////////////////////////////////////
     document.querySelector(".x" + snake.body[snake.body.length - 1][0] + "y" + snake.body[snake.body.length - 1][1]).classList.remove("snake");
     for (i = snake.body.length - 1; i > 0; i--) {
         snake.body[i] = snake.body[i - 1];
     }
     snake.body[0] = newHeadPosition;
 
+    ///////////////////////Телепортация/////
+    if (snake.body[0][1] < 0) {
+        snake.body[0] = [snake.body[0][0], game.sizeY - 1];
+    } else if (snake.body[0][0] < 0) {
+        snake.body[0] = [game.sizeX - 1, snake.body[0][1]];
+    } else if (snake.body[0][0] > game.sizeX - 1) {
+        snake.body[0] = [0, snake.body[0][1]];
+    } else if (snake.body[0][1] > game.sizeY - 1) {
+        snake.body[0] = [snake.body[0][0], 0];
+    }
+    ////////////////////////////////////////
 
     ////////////////////////Eating////////////
     if (document.querySelector(".x" + snake.body[snake.body.length - 1][0] + "y" + snake.body[snake.body.length - 1][1]).classList[2] === "food") {
